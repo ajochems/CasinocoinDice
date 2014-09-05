@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="startPageDef"
+                Package="org.casinocoin.dice.view.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="dynamicRegion1" taskFlowId="${StartPage.dynamicTaskFlowId}" activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+    <iterator Binds="SettingsView1" RangeSize="10" DataControl="DiceAppModuleDataControl" id="SettingsView1Iterator"/>
+    <iterator id="AvailableBetsView1Iterator" Binds="AvailableBetsView1" DataControl="DiceAppModuleDataControl"
+              RangeSize="-1"/>
+    <iterator id="TransactionsView1Iterator" Binds="TransactionsView1" DataControl="DiceAppModuleDataControl"
+              RangeSize="25"/>
+  </executables>
+  <bindings>
+    <methodAction id="getServerInitComplete" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getServerInitComplete" IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.getServerInitComplete_DiceAppModuleDataControl_SettingsView1_getServerInitComplete_result"/>
+    <methodAction id="getServerWalletAddress" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getServerWalletAddress" IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.getServerWalletAddress_DiceAppModuleDataControl_SettingsView1_getServerWalletAddress_result"/>
+    <methodAction id="setServerInitComplete" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setServerInitComplete" IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.setServerInitComplete_DiceAppModuleDataControl_SettingsView1_setServerInitComplete_result">
+      <NamedData NDName="value" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="setServerWalletAddress" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setServerWalletAddress" IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.setServerWalletAddress_DiceAppModuleDataControl_SettingsView1_setServerWalletAddress_result">
+      <NamedData NDName="address" NDType="java.lang.String"/>
+    </methodAction>
+    <table IterBinding="AvailableBetsView1Iterator" id="AvailableBetsView1">
+      <AttrNames>
+        <Item Value="Id"/>
+        <Item Value="CoinAddress"/>
+        <Item Value="Active"/>
+      </AttrNames>
+    </table>
+    <action id="Commit" DataControl="DiceAppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="getConfirmations" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getConfirmations"
+                  IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.getConfirmations_DiceAppModuleDataControl_SettingsView1_getConfirmations_result"/>
+    <methodAction id="setConfirmations" RequiresUpdateModel="true" Action="invokeMethod" MethodName="setConfirmations"
+                  IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.setConfirmations_DiceAppModuleDataControl_SettingsView1_setConfirmations_result">
+      <NamedData NDName="value" NDType="java.lang.Integer"/>
+    </methodAction>
+    <methodAction id="getJackpotWalletAddress" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getJackpotWalletAddress" IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.getJackpotWalletAddress_DiceAppModuleDataControl_SettingsView1_getJackpotWalletAddress_result"/>
+    <methodAction id="setJackpotWalletAddress" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="setJackpotWalletAddress" IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.setJackpotWalletAddress_DiceAppModuleDataControl_SettingsView1_setJackpotWalletAddress_result">
+      <NamedData NDName="address" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getJackpotValue" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getJackpotValue"
+                  IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.getJackpotValue_DiceAppModuleDataControl_SettingsView1_getJackpotValue_result"/>
+    <methodAction id="setJackpotValue" RequiresUpdateModel="true" Action="invokeMethod" MethodName="setJackpotValue"
+                  IsViewObjectMethod="true" DataControl="DiceAppModuleDataControl"
+                  InstanceName="data.DiceAppModuleDataControl.SettingsView1"
+                  ReturnName="data.DiceAppModuleDataControl.methodResults.setJackpotValue_DiceAppModuleDataControl_SettingsView1_setJackpotValue_result">
+      <NamedData NDName="value" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

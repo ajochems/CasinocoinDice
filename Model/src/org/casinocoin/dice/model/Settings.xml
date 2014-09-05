@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Settings"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="settings"
+  AliasName="Settings"
+  BindingStyle="JDBC">
+  <Attribute
+    Name="Id"
+    IsNotNull="true"
+    ColumnName="id"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    TableName="settings"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Name"
+    IsUnique="true"
+    IsNotNull="true"
+    Precision="100"
+    ColumnName="name"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="settings">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Value"
+    Precision="255"
+    ColumnName="value"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="settings">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="255"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="Primary1"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PRIMARY"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="org.casinocoin.dice.model.Settings.Id"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="StsNameUc">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="STS_NAME_UC"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="org.casinocoin.dice.model.Settings.Name"/>
+    </AttrArray>
+  </Key>
+</Entity>

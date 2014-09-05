@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="DiceAppModule"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true"
+  ComponentClass="org.casinocoin.dice.model.DiceAppModuleImpl">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewUsage
+    Name="SettingsView1"
+    ViewObjectName="org.casinocoin.dice.model.SettingsView"/>
+  <ViewUsage
+    Name="AvailableBetsView1"
+    ViewObjectName="org.casinocoin.dice.model.AvailableBetsView"/>
+  <ViewUsage
+    Name="PlacedBetsView1"
+    ViewObjectName="org.casinocoin.dice.model.PlacedBetsView"/>
+  <ViewUsage
+    Name="SecretsView1"
+    ViewObjectName="org.casinocoin.dice.model.SecretsView"/>
+  <ViewUsage
+    Name="TransactionsView1"
+    ViewObjectName="org.casinocoin.dice.model.TransactionsView"/>
+  <ViewUsage
+    Name="ActiveAvailableBetsView1"
+    ViewObjectName="org.casinocoin.dice.model.ActiveAvailableBetsView"/>
+  <ViewUsage
+    Name="TransactionsView2"
+    ViewObjectName="org.casinocoin.dice.model.TransactionsView"/>
+  <ViewUsage
+    Name="AvailableBetsView2"
+    ViewObjectName="org.casinocoin.dice.model.AvailableBetsView"/>
+  <ViewUsage
+    Name="ActiveAvailableJackpotBetsView1"
+    ViewObjectName="org.casinocoin.dice.model.ActiveAvailableJackpotBetsView"/>
+  <ViewLinkUsage
+    Name="PbsToTtsViewLink1"
+    ViewLinkObjectName="org.casinocoin.dice.model.PbsToTtsViewLink"
+    SrcViewUsageName="org.casinocoin.dice.model.DiceAppModule.PlacedBetsView1"
+    DstViewUsageName="org.casinocoin.dice.model.DiceAppModule.TransactionsView2"
+    Reversed="false"/>
+  <ViewLinkUsage
+    Name="PbsToAbsViewLink1"
+    ViewLinkObjectName="org.casinocoin.dice.model.PbsToAbsViewLink"
+    SrcViewUsageName="org.casinocoin.dice.model.DiceAppModule.PlacedBetsView1"
+    DstViewUsageName="org.casinocoin.dice.model.DiceAppModule.AvailableBetsView2"
+    Reversed="false"/>
+</AppModule>

@@ -1,0 +1,127 @@
+@charset "UTF-8";
+/**ADFFaces_Skin_File / DO NOT REMOVE**/
+@namespace af "http://xmlns.oracle.com/adf/faces/rich";
+@namespace dvt "http://xmlns.oracle.com/dss/adf/faces";
+
+.AFBackground2Color:alias {
+    color: #731800; 
+}
+
+.AFGaugeMetricBorderColor:alias {
+    color: #B83512; 
+}
+
+.AFBackground2BorderColor:alias {
+    color: #7F2108; 
+}
+
+af|column::banded-data-cell {
+    padding: 10px 2px 10px 2px; 
+    font-size: 14px; 
+}
+
+.AFDefaultFont:alias {
+    font-size: 14px; 
+}
+
+.AFGlobalBackgroundColor:alias {
+    color: #731800; 
+}
+
+.AFGlobalSelectedColor:alias {
+    color: #731800; 
+}
+
+.AFGlobalSelectedBorderColor:alias {
+    color: #731800; 
+}
+
+.AFGlobalTabDisabledColor:alias {
+    color: #D36143; 
+}
+
+.AFGlobalTabBorderDisabledColor:alias {
+    color: #D0431E; 
+}
+
+af|panelStretchLayout {
+        color: White; 
+}
+
+af|panelGroupLayout {
+    background-color: #a51b1f; 
+}
+
+af|column::column-header-cell {
+    background-color: #a51b1f; 
+    }
+
+af|column::column-header-cell-content {
+    color: White; 
+    background-color: #a51b1f; 
+}
+
+af|column::column-header-table {
+    }
+
+af|column::detail-column-header-cell {
+    background-color: #a51b1f; 
+}
+
+.AFTextColor:alias {
+    color: White; 
+}
+
+/*INFO: Color value exceeded range after adjustment: HSL(0, 0%, 120%)*/
+.AFTextPrimaryColor:alias {
+    color: #FFFFFF; 
+}
+
+.AFLabelColor:alias {
+    color: #E3E3E3; 
+}
+
+.AFTextSecondaryColor:alias {
+    color: #E3E3E3; 
+}
+
+.AFTextTertiaryColor:alias {
+    color: #FFFFFF; 
+}
+
+.AFDefaultFontFamily:alias {
+    font-family: Verdana; 
+}
+
+.CSCTableHeaderText {
+    color: #a51b1f; 
+    font-size: large; 
+    padding-bottom: 20px; 
+    padding-top: 20px; 
+}
+
+.CSCText {
+    color: Black; 
+}
+
+.CSCGoldHeader {
+    color: #C5B358; 
+    font-size: large;
+}
+
+.CSCWhiteHeader {
+    color: #FFFFFF; 
+    font-size: large;
+}
+
+af|column::banded-data-cell {
+    color: Black; 
+}
+
+af|column::data-cell {
+    color: Black; 
+}
+
+af|column::row-header-cell {
+    color: Black; 
+}

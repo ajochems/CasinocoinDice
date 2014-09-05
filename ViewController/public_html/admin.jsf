@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="admin.jsf" id="d1">
+        <af:form id="f1">
+            <af:panelStretchLayout topHeight="135px" id="psl1" startWidth="100px" endWidth="100px">
+                <f:facet name="top">
+                    <af:panelGroupLayout id="pgl3" halign="center"
+                                         inlineStyle="background-color:White;" layout="vertical">
+                        <af:image source="/images/casinocoin-dice-logo.png" shortDesc="Casinocoin Dice" id="i1"/>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                    <!-- id="af_one_column_header_stretched"  -->
+                    <af:region value="#{bindings.adminTF1.regionModel}" id="r1"/>
+                </f:facet>
+                <f:facet name="bottom">
+                    <af:panelGroupLayout layout="vertical" id="pgl2" halign="center">
+                        <af:outputFormatted value="Server is at block height #{diceServer.blockHeight} of network height #{diceServer.peerMaxChainHeight}."
+                                            id="of1" inlineStyle="text-align:center; font-size:small;"
+                                            partialTriggers="blockPoll"/>
+                        <af:poll id="blockPoll"/>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:panelStretchLayout>
+        </af:form>
+    </af:document>
+</f:view>

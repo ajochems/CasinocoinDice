@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Transactions"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="transactions"
+  AliasName="Transactions"
+  BindingStyle="JDBC"
+  xmlns:validation="http://xmlns.oracle.com/adfm/validation"
+  RowClass="org.casinocoin.dice.model.TransactionsImpl">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Attribute
+    Name="Id"
+    ColumnName="id"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    TableName="transactions"
+    PrimaryKey="true"
+    IsUpdateable="while_insert"
+    Domain="org.casinocoin.dice.model.AutoIncrementProperty">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TxType"
+    Precision="25"
+    ColumnName="tx_type"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="25"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TxId"
+    IsUnique="true"
+    Precision="255"
+    ColumnName="tx_id"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="255"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TxTime"
+    IsNotNull="true"
+    ColumnName="tx_time"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="transactions"/>
+  <Attribute
+    Name="CoinAddress"
+    Precision="255"
+    ColumnName="coin_address"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="255"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Amount"
+    ColumnName="amount"
+    SQLType="DECIMAL"
+    Type="java.math.BigDecimal"
+    ColumnType="DECIMAL"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Confirmations"
+    ColumnName="confirmations"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Blockhash"
+    Precision="255"
+    ColumnName="blockhash"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="65"/>
+    </DesignTime>
+    <validation:PreDefinedValidationBean
+      Name="BlockhashPrecisionScale0"
+      Description="Precision : (70)"
+      ValName="Precision : (70)"
+      Subtype="PRECISION_SCALE"/>
+  </Attribute>
+  <Attribute
+    Name="Blockheight"
+    ColumnName="blockheight"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AccountId"
+    ColumnName="account_id"
+    SQLType="INTEGER"
+    Type="java.lang.Integer"
+    ColumnType="INT"
+    TableName="transactions">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Comments"
+    Domain="org.casinocoin.dice.model.Text"
+    ColumnName="comments"
+    SQLType="STRUCT"
+    Type="org.casinocoin.dice.model.common.Text"
+    ColumnType="TEXT"
+    TableName="transactions"/>
+  <Attribute
+    Name="Archived"
+    IsNotNull="true"
+    ColumnName="archived"
+    SQLType="BIT"
+    Type="java.lang.Boolean"
+    ColumnType="BIT"
+    TableName="transactions"
+    DefaultValue="false"/>
+  <Attribute
+    Name="Executed"
+    IsNotNull="true"
+    ColumnName="executed"
+    SQLType="BIT"
+    Type="java.lang.Boolean"
+    ColumnType="BIT"
+    TableName="transactions"
+    DefaultValue="false"/>
+  <Attribute
+    Name="ExecutedTime"
+    ColumnName="executed_time"
+    SQLType="TIMESTAMP"
+    Type="java.sql.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="transactions"/>
+  <Key
+    Name="Primary1"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="PRIMARY"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="org.casinocoin.dice.model.Transactions.Id"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="TtsTxIdUk">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="TTS_TX_ID_UK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="org.casinocoin.dice.model.Transactions.TxId"/>
+    </AttrArray>
+  </Key>
+</Entity>

@@ -1,0 +1,85 @@
+- Ubuntu 14.04 LTS 64bit server with 2 cores and 4Gb of memory
+- Log in as root and update packages
+	apt-get update
+	apt-get upgrade
+- Set hostname
+	sudo vi /etc/hostname
+	sudo /etc/init.d/hostname start
+- Create user (use a large generated password, we will use a certificate to login)
+	adduser ubuntu
+- Create SSH key for login
+	mkdir /home/ubuntu/.ssh
+	vi /home/ubuntu/.ssh/authorized_keys
+	paste public key from Putty Key generator
+- Add user to sudoers
+	visudo
+	# User privilege specification
+	root    ALL=(ALL:ALL) ALL
+	ubuntu  ALL=(ALL) NOPASSWD: ALL
+- Exit and now login as user ubuntu
+- Install GIT
+	sudo apt-get install git
+- Enable Firewall
+	sudo apt-get install ufw
+	sudo ufw allow ssh
+	sudo ufw allow http
+	sudo ufw allow https
+	sudo ufw enable
+	sudo ufw status
+- Enable NTP (on a VPS this will not work)
+    sudo apt-get install ntpdate
+	sudo ntpdate ntp.ubuntu.com
+	sudo vi /etc/cron.daily/ntpdate
+		ntpdate ntp.ubuntu.com
+	sudo chmod 755 /etc/cron.daily/ntpdate
+- Install MySQL 5.6
+	sudo apt-get install mysql-server-5.6
+- Install Apache2 with mod_jk
+	sudo apt-get install apache2 libapache2-mod-jk
+- Install Java JDK 7
+	sudo apt-get install software-properties-common
+	sudo add-apt-repository ppa:webupd8team/java
+	sudo apt-get update
+	sudo apt-get install oracle-java7-installer
+	sudo apt-get install oracle-java7-set-default
+- Install Glassfish server 3.1.2.2
+	wget http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip
+	sudo unzip -d /opt glassfish-3.1.2.2.zip
+	sudo chown -R ubuntu:ubuntu /opt/glassfish3
+	/opt/glassfish3/bin/asadmin start-domain
+	(stop with: /opt/glassfish3/bin/asadamin stop-domain domain1)
+- Allow firewall access to glassfish console if you want to access the console remotely
+	sudo ufw allow 4848
+- Enable secure admin and set password
+	/opt/glassfish3/bin/asadmin change-admin-password
+	(old admin password is empty)
+	/opt/glassfish3/bin/asadmin --port 4848 enable-secure-admin
+	/opt/glassfish3/bin/asadmin restart-domain
+	(access console at: https://ip-address:4848)
+- Install ADF Essentials
+	unzip -j adf-essentials-12.1.3.zip -d /opt/glassfish3/glassfish/domains/domain1/lib/applibs
+- Install MySQL jdbc connector
+	cp mysql-connector-java-5.1.31-bin.jar /opt/glassfish3/glassfish/lib
+- Create database, user and objects (change dicepassword with your own password)
+	mysql -u root -p
+	CREATE DATABASE dicedb;
+	CREATE USER 'diceuser'@'%' IDENTIFIED BY 'dicepassword';
+	GRANT ALL ON dicedb.* to 'diceuser'@'%';
+	exit
+	mysql -u diceuser -p < sql/001_initial_setup.sql
+- Create datasource in Glassfish server (replace dicepassword with your own mysql diceuser password)
+	/opt/glassfish3/bin/asadmin create-jdbc-connection-pool --restype javax.sql.XADataSource --datasourceclassname com.mysql.jdbc.jdbc2.optional.MysqlXADataSource --property "user=diceuser:password=dicepassword:DatabaseName=dicedb:ServerName=localhost:port=3306" dice-db-pool
+	/opt/glassfish3/bin/asadmin create-jdbc-resource --connectionpoolid dice-db-pool jdbc/DiceDS
+	/opt/glassfish3/bin/asadmin restart-domain
+- Test the new datasource
+	 /opt/glassfish3/bin/asadmin ping-connection-pool dice-db-pool
+- Change Server JVM settings to increase memory and set MDS cache (jvm-option needs to be added), adjust memory to accommodate your server resources 
+	vi /opt/glassfish3/glassfish/domains/domain1/config/domain.xml
+		<jvm-options>-XX:MaxPermSize=512m</jvm-options>
+        <jvm-options>-XX:PermSize=256m</jvm-options>
+		<jvm-options>-Xmx2048m</jvm-options>
+		<jvm-options>-Doracle.mds.cache=simple</jvm-options>
+	/opt/glassfish3/bin/asadmin restart-domain
+- Deploy Application EAR file
+
+

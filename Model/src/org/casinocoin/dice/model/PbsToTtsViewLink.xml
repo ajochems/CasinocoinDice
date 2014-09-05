@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PbsToTtsViewLink"
+  Version="12.1.3.10.8"
+  InheritPersonalization="merge">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="PbsToTtsViewLink_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewLinkDefEnd
+    Name="PlacedBetsView"
+    Cardinality="1"
+    Source="true"
+    Owner="org.casinocoin.dice.model.PlacedBetsView">
+    <DesignTime>
+      <Attr Name="_finderName" Value="PlacedBetsView"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="org.casinocoin.dice.model.PlacedBetsView.PayoutTxId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="TransactionsView"
+    Cardinality="-1"
+    Owner="org.casinocoin.dice.model.TransactionsView">
+    <DesignTime>
+      <Attr Name="_finderName" Value="TransactionsView"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="org.casinocoin.dice.model.TransactionsView.TxId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="org.casinocoin.dice.model.common.PbsToTtsViewLinkMsgBundle"/>
+  </ResourceBundle>
+</ViewLink>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Domain SYSTEM "jbo_03_01.dtd">
+<!---->
+<Domain
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="Text"
+  Version="12.1.3.10.8">
+  <DesignTime>
+    <Attr Name="_type" Value="String"/>
+    <Attr Name="_isPersistent" Value="true"/>
+    <Attr Name="_isQueriable" Value="true"/>
+    <Attr Name="_isUpdateable" Value="true"/>
+    <Attr Name="_columnType" Value="TEXT"/>
+    <Attr Name="_isCodegen" Value="true"/>
+    <Attr Name="_isSelected" Value="true"/>
+  </DesignTime>
+</Domain>

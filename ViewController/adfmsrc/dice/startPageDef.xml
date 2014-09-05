@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="startPageDef" Package="dice">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="PlacedBetsView1" DataControl="DiceAppModuleDataControl"
+              id="PlacedBetsView1Iterator"/>
+    <iterator Binds="ActiveAvailableBetsView1" RangeSize="25" DataControl="DiceAppModuleDataControl"
+              id="ActiveAvailableBetsView1Iterator"/>
+    <iterator Binds="ActiveAvailableJackpotBetsView1" RangeSize="25" DataControl="DiceAppModuleDataControl"
+              id="ActiveAvailableJackpotBetsView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="PlacedBetsView1Iterator" id="PlacedBetsView1">
+      <nodeDefinition DefName="org.casinocoin.dice.model.PlacedBetsView" Name="PlacedBetsView10">
+        <AttrNames>
+          <Item Value="BetTime"/>
+          <Item Value="BetValue"/>
+          <Item Value="SenderCoinAddress"/>
+          <Item Value="TxId"/>
+          <Item Value="Confirmations"/>
+          <Item Value="GameValue"/>
+          <Item Value="LuckyNumber"/>
+          <Item Value="Payout"/>
+          <Item Value="GameDesc"/>
+          <Item Value="BetResult"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ActiveAvailableBetsView1Iterator" id="ActiveAvailableBetsView1">
+      <nodeDefinition DefName="org.casinocoin.dice.model.ActiveAvailableBetsView" Name="ActiveAvailableBetsView10">
+        <AttrNames>
+          <Item Value="GameDesc"/>
+          <Item Value="CoinAddress"/>
+          <Item Value="WinningOdds"/>
+          <Item Value="WinMultiplier"/>
+          <Item Value="MinBet"/>
+          <Item Value="MaxBet"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ActiveAvailableJackpotBetsView1Iterator" id="ActiveAvailableJackpotBetsView1">
+      <nodeDefinition DefName="org.casinocoin.dice.model.ActiveAvailableJackpotBetsView"
+                      Name="ActiveAvailableJackpotBetsView10">
+        <AttrNames>
+          <Item Value="GameDesc"/>
+          <Item Value="CoinAddress"/>
+          <Item Value="WinningOdds"/>
+          <Item Value="WinMultiplier"/>
+          <Item Value="MinBet"/>
+          <Item Value="MaxBet"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

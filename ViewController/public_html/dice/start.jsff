@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core">
+  <c:set var="viewcontrollerBundle" value="#{adfBundle['viewcontroller.dice.startBundle']}"/>
+  <c:set var="viewcontrollerBundle1" value="#{adfBundle['org.casinocoin.dice.view.bundles.DiceServerBundle_en']}"/>
+  <af:panelGroupLayout id="pgl1" layout="vertical" halign="center">
+    <af:poll id="pollData" interval="30000" pollListener="#{PlacedBetsBean.refreshPlacedBets}"/>
+    <af:panelGridLayout id="pgl9" inlineStyle="max-width:650px;">
+      <af:gridRow marginTop="5px" height="auto" id="gr1">
+        <af:gridCell marginStart="5px" width="50%" id="gc1">
+          <af:outputText value="Total wagered: " id="ot26"
+                         styleClass="CSCWhiteHeader"
+                         partialTriggers="pollData"/>
+          <af:outputText value="#{bindings.PlacedBetsView1Iterator.viewObject.sum['BetValue']}" id="ot28"
+                         styleClass="CSCGoldHeader"/>
+        </af:gridCell>
+        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc2" halign="end">
+          <af:outputText value="Jackpot value: " id="ot25" styleClass="CSCWhiteHeader"/>
+          <af:outputText id="ot30" styleClass="CSCGoldHeader" value="#{diceServer.formattedJackpotValue}"/>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
+        <af:gridCell marginStart="5px" width="50%" id="gc3">
+          <af:outputText value="Bets placed: " id="ot27" styleClass="CSCWhiteHeader"
+                         partialTriggers="pollData"/>
+          <af:outputText value="#{bindings.PlacedBetsView1.estimatedRowCount}" id="ot29" styleClass="CSCGoldHeader"/>
+        </af:gridCell>
+        <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc4" halign="end">
+          <af:outputText value="Biggest Win: " id="ot31" styleClass="CSCWhiteHeader"/>
+          <af:outputText id="ot32" styleClass="CSCGoldHeader"
+                         value="#{bindings.PlacedBetsView1Iterator.viewObject.max['Payout']}"/>
+        </af:gridCell>
+      </af:gridRow>
+    </af:panelGridLayout>
+    <af:panelTabbed position="left" id="pt1"
+                    inlineStyle="max-width:700pt; max-height:700pt; min-height:400pt; min-width:300pt;"
+                    minTabSize="50px">
+      <af:showDetailItem id="tabGames" text="#{viewcontrollerBundle.GAMES}" disclosed="true"
+                         inlineStyle="color:Maroon;" icon="/images/casinocoin-icon.png">
+        <af:panelGroupLayout id="pgl2" layout="vertical" halign="center" inlineStyle="background-color:White;">
+          <af:outputText value="#{viewcontrollerBundle.GAMES}" id="of1"
+                         styleClass="CSCTableHeaderText" inlineStyle="margin-top:0px;"/>
+          <af:table value="#{bindings.ActiveAvailableBetsView1.collectionModel}" var="row"
+                    rows="#{bindings.ActiveAvailableBetsView1.rangeSize}"
+                    emptyText="#{bindings.ActiveAvailableBetsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    rowBandingInterval="0" fetchSize="#{bindings.ActiveAvailableBetsView1.rangeSize}" id="t1" summary="#{viewcontrollerBundle.AVAILABLE_GAMES}"
+                    inlineStyle="margin-top:10px;">
+            <af:column sortProperty="#{bindings.ActiveAvailableBetsView1.hints.GameDesc.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableBetsView1.hints.GameDesc.label}" id="c1" width="200"
+                       rowHeader="unstyled">
+              <af:outputText value="#{row.GameDesc}"
+                             shortDesc="#{bindings.ActiveAvailableBetsView1.hints.GameDesc.tooltip}" id="ot1"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableBetsView1.hints.CoinAddress.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableBetsView1.hints.CoinAddress.label}" id="c2" width="325">
+              <af:outputText value="#{row.CoinAddress}"
+                             shortDesc="#{bindings.ActiveAvailableBetsView1.hints.CoinAddress.tooltip}" id="ot2"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableBetsView1.hints.WinningOdds.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableBetsView1.hints.WinningOdds.label}" id="c3" width="70">
+              <af:outputText value="#{row.WinningOdds} %"
+                             shortDesc="#{bindings.ActiveAvailableBetsView1.hints.WinningOdds.tooltip}" id="ot3">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableBetsView1.hints.WinningOdds.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableBetsView1.hints.WinMultiplier.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableBetsView1.hints.WinMultiplier.label}" id="c4" width="70">
+              <af:outputText value="#{row.WinMultiplier}"
+                             shortDesc="#{bindings.ActiveAvailableBetsView1.hints.WinMultiplier.tooltip}" id="ot4">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableBetsView1.hints.WinMultiplier.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableBetsView1.hints.MinBet.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableBetsView1.hints.MinBet.label}" id="c5" width="70">
+              <af:outputText value="#{row.MinBet}" shortDesc="#{bindings.ActiveAvailableBetsView1.hints.MinBet.tooltip}"
+                             id="ot5">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableBetsView1.hints.MinBet.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableBetsView1.hints.MaxBet.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableBetsView1.hints.MaxBet.label}" id="c6" width="70">
+              <af:outputText value="#{row.MaxBet}" shortDesc="#{bindings.ActiveAvailableBetsView1.hints.MaxBet.tooltip}"
+                             id="ot6">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableBetsView1.hints.MaxBet.format}"/>
+              </af:outputText>
+            </af:column>
+            <f:facet name="header">
+              <af:outputText value="#{viewcontrollerBundle.GAMES}" id="ot19"/>
+            </f:facet>
+          </af:table>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+      <af:showDetailItem text="#{viewcontrollerBundle.GAMES_WITH_JACKPOT}" id="tabJackpotGames"
+                         icon="/images/casinocoin-coin.png">
+        <af:panelGroupLayout id="pgl3" layout="vertical" halign="center" inlineStyle="background-color:White;">
+          <af:outputText value="#{viewcontrollerBundle.GAMES_WITH_JACKPOT}" id="ot21" styleClass="CSCTableHeaderText"/>
+          <af:table value="#{bindings.ActiveAvailableJackpotBetsView1.collectionModel}" var="row"
+                    rows="#{bindings.ActiveAvailableJackpotBetsView1.rangeSize}"
+                    emptyText="#{bindings.ActiveAvailableJackpotBetsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    rowBandingInterval="0" fetchSize="#{bindings.ActiveAvailableJackpotBetsView1.rangeSize}" id="t3"
+                    summary="Table with Jackpot Bets" inlineStyle="margin-top:10px;">
+            <af:column sortProperty="#{bindings.ActiveAvailableJackpotBetsView1.hints.GameDesc.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableJackpotBetsView1.hints.GameDesc.label}" id="c12"
+                       rowHeader="unstyled" width="200">
+              <af:outputText value="#{row.GameDesc}"
+                             shortDesc="#{bindings.ActiveAvailableJackpotBetsView1.hints.GameDesc.tooltip}" id="ot10"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableJackpotBetsView1.hints.CoinAddress.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableJackpotBetsView1.hints.CoinAddress.label}" id="c15"
+                       width="325">
+              <af:outputText value="#{row.CoinAddress}"
+                             shortDesc="#{bindings.ActiveAvailableJackpotBetsView1.hints.CoinAddress.tooltip}"
+                             id="ot12"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinningOdds.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinningOdds.label}" id="c16"
+                       width="70">
+              <af:outputText value="#{row.WinningOdds} %"
+                             shortDesc="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinningOdds.tooltip}"
+                             id="ot15">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinningOdds.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinMultiplier.name}"
+                       sortable="true"
+                       headerText="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinMultiplier.label}" id="c17"
+                       width="70">
+              <af:outputText value="#{row.WinMultiplier}"
+                             shortDesc="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinMultiplier.tooltip}"
+                             id="ot16">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableJackpotBetsView1.hints.WinMultiplier.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableJackpotBetsView1.hints.MinBet.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableJackpotBetsView1.hints.MinBet.label}" id="c18" width="70">
+              <af:outputText value="#{row.MinBet}"
+                             shortDesc="#{bindings.ActiveAvailableJackpotBetsView1.hints.MinBet.tooltip}" id="ot17">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableJackpotBetsView1.hints.MinBet.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ActiveAvailableJackpotBetsView1.hints.MaxBet.name}" sortable="true"
+                       headerText="#{bindings.ActiveAvailableJackpotBetsView1.hints.MaxBet.label}" id="c19" width="70">
+              <af:outputText value="#{row.MaxBet}"
+                             shortDesc="#{bindings.ActiveAvailableJackpotBetsView1.hints.MaxBet.tooltip}" id="ot18">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ActiveAvailableJackpotBetsView1.hints.MaxBet.format}"/>
+              </af:outputText>
+            </af:column>
+            <f:facet name="header">
+              <af:outputText value="#{viewcontrollerBundle.GAMES_WITH_JACKPOT}" id="ot20"/>
+            </f:facet>
+          </af:table>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+      <af:showDetailItem id="tabLastBets" text="#{viewcontrollerBundle.BET_RESULTS}"
+                         inlineStyle="color:Maroon; flex-align:center; width:auto;" icon="/images/dice.png">
+        <af:panelGroupLayout id="pgl6" layout="vertical" inlineStyle="background-color:White;" halign="center">
+          <af:outputText value="#{viewcontrollerBundle.BET_RESULTS}" id="ot22" styleClass="CSCTableHeaderText"/>
+          <af:table value="#{bindings.PlacedBetsView1.collectionModel}" var="row"
+                    rows="#{bindings.PlacedBetsView1.rangeSize}" summary="Last placed bets"
+                    emptyText="#{bindings.PlacedBetsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    rowBandingInterval="0" fetchSize="#{bindings.PlacedBetsView1.rangeSize}" id="t2"
+                    partialTriggers="::pollData" binding="#{PlacedBetsBean.placedBetsTable}" scrollPolicy="loadMore"
+                    inlineStyle="margin-top:10px;">
+            <af:column sortProperty="#{bindings.PlacedBetsView1.hints.BetTime.name}" sortable="true"
+                       rowHeader="unstyled" headerText="#{bindings.PlacedBetsView1.hints.BetTime.label}" id="c7"
+                       width="165">
+              <af:outputText value="#{row.BetTime}" shortDesc="#{bindings.PlacedBetsView1.hints.BetTime.tooltip}"
+                             id="ot7">
+                <af:convertDateTime pattern="#{bindings.PlacedBetsView1.hints.BetTime.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.PlacedBetsView1.hints.SenderCoinAddress.name}" sortable="true"
+                       headerText="#{bindings.PlacedBetsView1.hints.SenderCoinAddress.label}" id="c9" width="225">
+              <af:outputText value="#{row.SenderCoinAddress}"
+                             shortDesc="#{bindings.PlacedBetsView1.hints.SenderCoinAddress.tooltip}" id="ot9"/>
+            </af:column>
+            <af:column headerText="#{bindings.PlacedBetsView1.hints.GameDesc.label}" id="c11" width="150">
+              <af:outputText value="#{row.GameDesc}" shortDesc="#{bindings.PlacedBetsView1.hints.GameDesc.tooltip}"
+                             id="ot11"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.PlacedBetsView1.hints.LuckyNumber.name}" sortable="true"
+                       headerText="#{bindings.PlacedBetsView1.hints.LuckyNumber.label}" id="c13" width="60">
+              <af:outputText value="#{row.LuckyNumber}"
+                             shortDesc="#{bindings.PlacedBetsView1.hints.LuckyNumber.tooltip}" id="ot13">
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.PlacedBetsView1.hints.LuckyNumber.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.PlacedBetsView1.hints.BetValue.name}" sortable="true"
+                       headerText="#{bindings.PlacedBetsView1.hints.BetValue.label}" id="c8" width="60">
+              <af:outputText value="#{row.BetValue}" shortDesc="#{bindings.PlacedBetsView1.hints.BetValue.tooltip}"
+                             id="ot8">
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.PlacedBetsView1.hints.BetValue.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column headerText="#{bindings.PlacedBetsView1.hints.BetResult.label}" id="c10" width="60">
+              <af:switcher id="s1" facetName="#{row.BetResult}">
+                <f:facet name="true">
+                  <af:outputText value="#{viewcontrollerBundle.WIN}" id="otWIN"
+                                 inlineStyle="color:Green; font-weight:bold;"/>
+                </f:facet>
+                <f:facet name="false">
+                  <af:outputText value="#{viewcontrollerBundle.LOSE}" id="otLOSE"
+                                 inlineStyle="color:#a51b1f; font-weight:bold;"/>
+                </f:facet>
+              </af:switcher>
+            </af:column>
+            <af:column sortProperty="#{bindings.PlacedBetsView1.hints.Payout.name}" sortable="true"
+                       headerText="#{bindings.PlacedBetsView1.hints.Payout.label}" id="c14" width="60">
+              <af:outputText value="#{row.Payout}" shortDesc="#{bindings.PlacedBetsView1.hints.Payout.tooltip}"
+                             id="ot14">
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.PlacedBetsView1.hints.Payout.format}"/>
+              </af:outputText>
+            </af:column>
+          </af:table>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+      <af:showDetailItem id="tabHowto" text="#{viewcontrollerBundle1.HOW_TO_PLAY}" icon="/images/rulebook.png">
+        <af:panelGroupLayout id="pgl4" layout="vertical" inlineStyle="background-color:White;" halign="center">
+          <af:outputText value="#{viewcontrollerBundle.HOW_TO_PLAY}" id="ot23" styleClass="CSCTableHeaderText"
+                         inlineStyle="text-align:center;"/>
+        </af:panelGroupLayout>
+        <af:panelGroupLayout id="pgl7" layout="vertical" inlineStyle="background-color:White;">
+          <af:outputFormatted value="&lt;ul>
+&lt;li>Select a bet without jackpot (first tab) or with jackpot (second tab)&lt;/li>
+&lt;li>Copy the corresponding coin address&lt;/li>
+&lt;li>Sent an amount between the bet minimal and maximal values from your CSC wallet (do NOT use an online wallet or exchange!)&lt;/li>
+&lt;li>The bet will be executed after your transaction has been confirmed on the block chain&lt;/li>
+&lt;li>If you win you will receive your bet amount multiplied with the bet multiplier, if you lose you will receive 0.001 coins as confirmation of your bet&lt;/li>
+&lt;li>If your bet could not be executed the bet amount will be refunded, reduced with a 0.001 transaction fee&lt;/li>
+&lt;/ul> " id="of2" styleClass="CSCText"/>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+      <af:showDetailItem id="tabVerify" text="#{viewcontrollerBundle1.VERIFY_BET}" icon="/images/verify50.png">
+        <af:panelGroupLayout id="pgl5" layout="vertical" inlineStyle="background-color:White;" halign="center">
+          <af:outputText id="ot24" styleClass="CSCTableHeaderText" value="#{viewcontrollerBundle.HOW_TO_VERIFY_A_BET}"/>
+        </af:panelGroupLayout>
+        <af:panelGroupLayout id="pgl8" inlineStyle="background-color:White;" layout="vertical">
+          <af:outputFormatted value="&lt;ol> &lt;li>The Lucky Number for your bet is calculated from the ID of the Transaction you send to the game and a random generated secret hash (string of characters). Every day a new hash is created and the previous hashes are released to the public. Once a hash is released a bet result can be verified, follow the steps below in order to do so. &lt;ol> &lt;li>&lt;p>Transaction ID; you can get this from the transaction details from your wallet.&lt;/p>&lt;p>Example: &lt;div style=&quot;color:#a51b1f;&quot;>764d4ece5495ae5c5d22a6fcaa5fbfef626c721c17e37dd2d19e5fcb4d1cd5de&lt;/div>&lt;/p>&lt;/li> &lt;li>&lt;p>Secret Hash; this is a random string which is created every day and released the next day. You can get it from the Secrets page&lt;/p>&lt;p>Example: &lt;div style=&quot;color:#a51b1f;&quot;>1OoTAcWnxWTgrSi4msQ9EEBXQjDAuLHh&lt;/div>&lt;/p>&lt;/li> &lt;/ol> &lt;/li> &lt;li>Concatenate both Transacton ID and Secret Hash to one string. Example: &lt;div style=&quot;color:#a51b1f;&quot;>764d4ece5495ae5c5d22a6fcaa5fbfef626c721c17e37dd2d19e5fcb4d1cd5de1OoTAcWnxWTgrSi4msQ9EEBXQjDAuLHh&lt;/div>&lt;/li> &lt;li>Next you will need to go with your concatenated string to the &lt;a href=&quot;http://www.convertstring.com/en/Hash/SHA256&quot; target=&quot;_blank&quot;>SHA-256 Hash Calculator&lt;/a>&lt;/li> &lt;li>Paste the string in the 'Paste the text you wish to SHA256 hash here' text box and click on the 'Generate SHA256 Hash' button.&lt;/li> &lt;li>When calculating the SHA 256 hash of above string you will get: &lt;div style=&quot;color:#a51b1f;&quot;>9DC5130570EC8FC5F3414C1C80BF7DA0229D8D4F5499B23650B048E9BA9030DE&lt;/div>&lt;/li> &lt;li>Now your Lucky Number is calculated from the first 4 hexadecimal digits of that string, in this case 9DC5. Go to this &lt;a href=&quot;http://www.binaryhexconverter.com/hex-to-decimal-converter&quot; target=&quot;_blank&quot;>Online Hexadecimal to Decimal converter&lt;/a> and calculated the decimal value.&lt;/li> &lt;li>For this example the Lucky Number is &lt;div style=&quot;color:#a51b1f;&quot;>9DC5&lt;/div> > &lt;div style=&quot;color:Green;&quot;>40389&lt;/div>. This number will be checked against your placed bet and determine if you win or lose.&lt;/li> &lt;li>Remember that you have to wait until the next day before you can verify your bet as the used Secret will not be released until then. This is to prevent tampering, ... knowing the secret could in theory allow you to create a winning bet&lt;/li> &lt;/ol>" id="of3" styleClass="CSCText"/>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+    </af:panelTabbed>
+  </af:panelGroupLayout>
+</ui:composition>

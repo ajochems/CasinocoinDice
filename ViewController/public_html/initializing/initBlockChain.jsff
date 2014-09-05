@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:panelGroupLayout id="pgl1" inlineStyle="padding:5px 5px 5px 5px;" layout="vertical">
+    <af:outputFormatted value="Server is currently initializing and downloading the Casinocoin block chain. Please wait until finished." id="of2"
+                        inlineStyle="font-size:medium;"/>
+    <af:outputFormatted value="Block chain at #{diceServer.blockHeight} of #{diceServer.peerMaxChainHeight} blocks available"
+                        id="of1" partialTriggers="progressPoll" inlineStyle="font-size:medium;"/>
+    <af:progressIndicator id="pi1" value="#{viewScope.chainDownloadProgress}" partialTriggers="progressPoll"
+                          inlineStyle="font-size:medium; padding:10px 0px 10px 0px;"/>
+    <af:poll id="progressPoll" pollListener="#{InitBlockChain.checkBlockChainUpToDate}" interval="2000"/>
+  </af:panelGroupLayout>
+</ui:composition>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<skins xmlns="http://myfaces.apache.org/trinidad/skin">
+  <skin>
+    <id>CasinocoinSkin.desktop</id>
+    <family>CasinocoinSkin</family>
+    <extends>skyros-v1.desktop</extends>
+    <render-kit-id>org.apache.myfaces.trinidad.desktop</render-kit-id>
+    <style-sheet-name>skins/CasinocoinSkin/CasinocoinSkin.css</style-sheet-name>
+    <bundle-name>org.casinocoin.dice.view.skinBundle</bundle-name>
+    <metadata>
+      <description-bundle>org.casinocoin.dice.view.skinBundle</description-bundle>
+    </metadata>
+  </skin>
+</skins>

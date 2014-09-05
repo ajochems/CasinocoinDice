@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:panelGridLayout id="pgl1">
+        <af:gridRow height="100%" id="gr1">
+            <af:gridCell width="125px" halign="stretch" valign="stretch" id="gc2">
+                <!-- Left -->
+                <af:panelGroupLayout id="pgl2" halign="start" layout="vertical">
+                    <af:button text="Transactions" id="butTransactions" styleClass="AFStretchWidth"/>
+                    <af:button text="Placed Bets" id="butPlacedBets" styleClass="AFStretchWidth"/>
+                    <af:button text="Server Wallet" id="butWallet"/>
+                </af:panelGroupLayout>
+            </af:gridCell>
+            <af:gridCell width="100%" halign="stretch" valign="stretch" id="gc1">
+                <!-- Content -->
+            </af:gridCell>
+        </af:gridRow>
+    </af:panelGridLayout>
+</ui:composition>
