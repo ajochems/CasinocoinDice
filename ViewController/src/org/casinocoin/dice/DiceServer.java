@@ -28,7 +28,8 @@ public class DiceServer {
     private static Integer confirmations = 10;
     private static String serverJackpotAddress;
     private static BigInteger jackpotValue;
-
+    private static String formattedJackpotValue;
+    
     public DiceServer(){
         log.info("Casinocoin Dice Server is starting up ...");
         NetworkParameters params = MainNetParams.get();
@@ -138,7 +139,12 @@ public class DiceServer {
         return jackpotValue;
     }
     
-    public static String getFormattedJackpotValue(){
-        return Utils.bitcoinValueToFriendlyString(jackpotValue);
+    public String getFormattedJackpotValue(){
+        setFormattedJackpotValue(Utils.bitcoinValueToFriendlyString(jackpotValue));
+        return formattedJackpotValue;
+    }
+    
+    public void setFormattedJackpotValue(String value){
+        formattedJackpotValue = value;
     }
 }

@@ -5,7 +5,7 @@
          <AM-Pooling jbo.doconnectionpooling="true" jbo.ampool.initpoolsize="5"/>
          <Database jbo.TypeMapEntries="Java" jbo.sql92.JdbcDriverClass="com.mysql.jdbc.Driver" jbo.SQLBuilder="SQL92"/>
          <Security AppModuleJndiName="org.casinocoin.dice.model.DiceAppModule"/>
-         <Custom ns0:JDBCDataSource="java:comp/env/jdbc/DiceDS" ns0:ns0="http://xmlns.oracle.com/bc4j/configuration" xmlns:ns0="http://xmlns.oracle.com/bc4j/configuration"/>
+         <Custom ns0:JDBCDataSource="jdbc/DiceDS" ns0:ns0="http://xmlns.oracle.com/bc4j/configuration" xmlns:ns0="http://xmlns.oracle.com/bc4j/configuration"/>
       </AppModuleConfig>
       <AppModuleConfig jbo.project="org.casinocoin.dice.model.Model" ApplicationName="org.casinocoin.dice.model.DiceAppModule" DeployPlatform="LOCAL" name="AppModuleShared">
          <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.resetnontransactionalstate="false" jbo.ampool.maxpoolsize="1" jbo.ampool.isuseexclusive="false"/>

@@ -101,6 +101,7 @@
          </hash>
          <hash n="CasinocoinDice-Glassfish">
             <hash n="archiveOptions">
+               <value n="compressed" v="true"/>
                <value n="hasManifest" v="false"/>
             </hash>
             <hash n="dependencies">
@@ -127,6 +128,10 @@
                      <hash n="filters">
                         <list n="rules">
                            <hash>
+                              <value n="pattern" v="META-INF/weblogic-application.xml"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
                               <value n="pattern" v="**"/>
                               <value n="type" v="0"/>
                            </hash>
@@ -139,6 +144,10 @@
                      <value n="displayName" v="Application Libraries"/>
                      <hash n="filters">
                         <list n="rules">
+                           <hash>
+                              <value n="pattern" v="*adf-mobile-schema.jar"/>
+                              <value n="type" v="1"/>
+                           </hash>
                            <hash>
                               <value n="pattern" v="**"/>
                               <value n="type" v="0"/>

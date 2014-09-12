@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import oracle.adf.controller.TaskFlowId;
 
+
 import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCIteratorBinding;
 import oracle.adf.share.logging.ADFLogger;
@@ -12,12 +13,7 @@ import oracle.adf.model.OperationBinding;
 
 import oracle.adf.model.binding.DCBindingContainer;
 
-import oracle.adf.model.binding.DCBindingContainerValueChangeEvent;
-import oracle.adf.share.ADFContext;
-
 import oracle.jbo.Row;
-
-import org.apache.myfaces.trinidad.event.PollEvent;
 
 import org.casinocoin.core.Address;
 import org.casinocoin.core.ECKey;
@@ -33,7 +29,7 @@ public class StartPage {
     private DCBindingContainer bindings;
 
     public StartPage() {
-        log.info("StartPage Bean Init");
+        log.info("### StartPage Bean Init");
         // initialize bindings
         BindingContext bc = BindingContext.getCurrent();
         bindings = (DCBindingContainer) bc.getCurrentBindingsEntry();

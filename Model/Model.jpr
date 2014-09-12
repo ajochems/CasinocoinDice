@@ -104,6 +104,9 @@
       <hash n="profileDefinitions">
          <hash n="CasinocoinDice_Model">
             <value n="adflib-connectionDetails" v="true"/>
+            <list n="adflib-excludedConnections">
+               <string v="|"/>
+            </list>
             <value n="adflib-nonReusablesError" v="false"/>
             <hash n="archiveOptions">
                <value n="hasManifest" v="true"/>

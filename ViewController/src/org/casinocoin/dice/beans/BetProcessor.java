@@ -115,7 +115,12 @@ public class BetProcessor {
             winMultiplier = (BigDecimal) aabRow.getAttribute("WinMultiplier");
             minBet = (BigDecimal) aabRow.getAttribute("MinBet");
             maxBet = (BigDecimal) aabRow.getAttribute("MaxBet");
-            jackpotBet = ((Boolean)aabRow.getAttribute("JackpotBet")).booleanValue();
+            Integer jackpotBetInteger = (Integer)aabRow.getAttribute("JackpotBet");
+            if(jackpotBetInteger.equals(Integer.valueOf("1"))){
+                jackpotBet = Boolean.valueOf(true);
+            } else {
+                jackpotBet = Boolean.valueOf(false);
+            }
         } else if (aajbVO.hasNext()){
             // jackpot bet
             Row aajbRow = aabVO.next();
@@ -125,7 +130,12 @@ public class BetProcessor {
             winMultiplier = (BigDecimal) aajbRow.getAttribute("WinMultiplier");
             minBet = (BigDecimal) aajbRow.getAttribute("MinBet");
             maxBet = (BigDecimal) aajbRow.getAttribute("MaxBet");
-            jackpotBet = ((Boolean)aajbRow.getAttribute("JackpotBet")).booleanValue();
+            Integer jackpotBetInteger = (Integer)aajbRow.getAttribute("JackpotBet");
+            if(jackpotBetInteger.equals(Integer.valueOf("1"))){
+                jackpotBet = Boolean.valueOf(true);
+            } else {
+                jackpotBet = Boolean.valueOf(false);
+            }
         } else {
             String errorMsg = "ERROR: Available bet for coinaddress " + receivedAddress + " not found in database.";
             log.severe(errorMsg);
