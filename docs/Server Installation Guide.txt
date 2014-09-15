@@ -17,8 +17,8 @@
 	root    ALL=(ALL:ALL) ALL
 	ubuntu  ALL=(ALL) NOPASSWD: ALL
 - Exit and now login as user ubuntu
-- Install GIT
-	sudo apt-get install git
+- Install GIT and Maven
+	sudo apt-get install git maven
 - Enable Firewall
 	sudo apt-get install ufw
 	sudo ufw allow ssh
@@ -56,30 +56,92 @@
 	/opt/glassfish3/bin/asadmin --port 4848 enable-secure-admin
 	/opt/glassfish3/bin/asadmin restart-domain
 	(access console at: https://ip-address:4848)
+- Download CasinocoinDice Repository
+	git clone https://github.com/ajochems/CasinocoinDice.git
 - Install ADF Essentials
-	unzip -j adf-essentials-12.1.3.zip -d /opt/glassfish3/glassfish/domains/domain1/lib/applibs
+	unzip -j CasinocoinDice/assets/adf-essentials-12.1.3.zip -d /opt/glassfish3/glassfish/domains/domain1/lib
 - Install MySQL jdbc connector
-	cp mysql-connector-java-5.1.31-bin.jar /opt/glassfish3/glassfish/lib
+	cp CasinocoinDice/assets/mysql-connector-java-5.1.31-bin.jar /opt/glassfish3/glassfish/lib/endorsed
+- Increase MySQL memory usage
+	sudo vi /etc/mysql/my.cnf
+		key_buffer = 512M
+		query_cache_size = 64M
+	sudo /etc/init.d/mysql restart
 - Create database, user and objects (change dicepassword with your own password)
 	mysql -u root -p
 	CREATE DATABASE dicedb;
 	CREATE USER 'diceuser'@'%' IDENTIFIED BY 'dicepassword';
 	GRANT ALL ON dicedb.* to 'diceuser'@'%';
 	exit
-	mysql -u diceuser -p < sql/001_initial_setup.sql
+	mysql -u diceuser -p < CasinocoinDice/sql/001_initial_setup.sql
 - Create datasource in Glassfish server (replace dicepassword with your own mysql diceuser password)
-	/opt/glassfish3/bin/asadmin create-jdbc-connection-pool --restype javax.sql.XADataSource --datasourceclassname com.mysql.jdbc.jdbc2.optional.MysqlXADataSource --property "user=diceuser:password=dicepassword:DatabaseName=dicedb:ServerName=localhost:port=3306" dice-db-pool
+	/opt/glassfish3/bin/asadmin create-jdbc-connection-pool --restype javax.sql.ConnectionPoolDataSource --datasourceclassname com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource --property "user=diceuser:password=dicepassword:DatabaseName=dicedb:ServerName=localhost:port=3306" dice-db-pool
 	/opt/glassfish3/bin/asadmin create-jdbc-resource --connectionpoolid dice-db-pool jdbc/DiceDS
 	/opt/glassfish3/bin/asadmin restart-domain
 - Test the new datasource
 	 /opt/glassfish3/bin/asadmin ping-connection-pool dice-db-pool
-- Change Server JVM settings to increase memory and set MDS cache (jvm-option needs to be added), adjust memory to accommodate your server resources 
+- Change Server JVM settings to increase memory, set MDS cache and CSC Wallet location. Adjust the memory settings to accommodate your own server resources (minimum of 2Gb is recommended). If org.casinocoin.dicehome is not defined it will default to $HOME/csc-wallet-data
 	vi /opt/glassfish3/glassfish/domains/domain1/config/domain.xml
 		<jvm-options>-XX:MaxPermSize=512m</jvm-options>
         <jvm-options>-XX:PermSize=256m</jvm-options>
 		<jvm-options>-Xmx2048m</jvm-options>
 		<jvm-options>-Doracle.mds.cache=simple</jvm-options>
+		<jvm-options>-Dorg.casinocoin.dicehome=/home/ubuntu/wallet</jvm-options>
+		<jvm-options>-Dfile.encoding=UTF-8</jvm-options>
+	/opt/glassfish3/bin/asadmin restart-domain
+- Change logging to sl4j and have all logging redirected to domains/domain1/logs/glassfish.log
+	cp slf4j-api-1.5.10.jar jul-to-slf4j-1.5.10.jar logback-core-0.9.20.jar logback-classic-0.9.20.jar /opt/glassfish3/glassfish/lib/endorsed
+	vi /opt/glassfish3/glassfish/domains/domain1/config/logback.xml
+		<configuration debug="true" scan="true">
+		  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+			<file>${com.sun.aas.instanceRoot}/logs/glassfish.log</file>
+			<append>true</append>
+			<encoder>
+			  <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{52} - %msg%n</Pattern>
+			</encoder>
+		  </appender>
+		  <root>
+			<level value="INFO" />
+			<appender-ref ref="FILE" />
+		  </root>
+		</configuration>
+	vi /opt/glassfish3/glassfish/domains/domain1/config/logging.properties
+		(Set handlers and add org.casinocoin.* entries)
+		handlers=org.slf4j.bridge.SLF4JBridgeHandler
+		com.sun.enterprise.server.logging.GFFileHandler.file=${com.sun.aas.instanceRoot}/logs/server.log
+		org.casinocoin.dice.level=INFO
+		org.casinocoin.core.WalletEventListener.level=INFO
+		org.casinocoin.dice.beans.level=INFO
+		org.apache.catalina.connector.Request.level=SEVERE
+	vi /opt/glassfish3/glassfish/domains/domain1/config/domain.xml
+		(add jvm-options)
+		<jvm-options>-Djava.util.logging.config.file=${com.sun.aas.instanceRoot}/config/logging.properties</jvm-options>
+        <jvm-options>-Dlogback.configurationFile=file:///${com.sun.aas.instanceRoot}/config/logback.xml</jvm-options>
 	/opt/glassfish3/bin/asadmin restart-domain
 - Deploy Application EAR file
-
-
+	/opt/glassfish3/bin/asadmin deploy  ~/CasinocoinDice-Glassfish.ear
+- Configure Apache mod_jk to front-end Glassfish application server on port 80
+	- Create glassfish-jk.properties file
+		vi /opt/glassfish3/glassfish/domains/domain1/config/glassfish-jk.properties
+			# Define 1 real worker using ajp13
+			worker.list=diceserver1
+			# Set properties for diceserver1 (ajp13)
+			worker.diceserver1.type=ajp13
+			worker.diceserver1.host=localhost
+			worker.diceserver1.port=8010
+	- Add mapping for application url
+		sudo vi /etc/apache2/sites-available/000-default.conf
+			(Add the next line inside the <VirtualHost> container)
+			JkMount /CasinocoinDice/* diceserver1
+	- Set the workers properties file to use
+		sudo vi /etc/apache2/mods-available/jk.conf
+			JkWorkersFile /opt/glassfish3/glassfish/domains/domain1/config/glassfish-jk.properties
+		sudo /etc/init.d/apache2 restart
+	- Create a HTTP listener for Glassfish
+		/opt/glassfish3/bin/asadmin create-http-listener --listenerport 8009 --listeneraddress 0.0.0.0 --defaultvs server dice-listener1
+		/opt/glassfish3/bin/asadmin create-network-listener --protocol http-listener-1 --listenerport 8010 --jkenabled true dice-listener1
+		/opt/glassfish3/bin/asadmin set server-config.network-config.network-listeners.network-listener.\
+			dice-listener1.jk-configuration-file=/opt/glassfish3/glassfish/domains/domain1/config/glassfish-jk.properties
+		/opt/glassfish3/bin/asadmin create-jvm-options -Dcom.sun.enterprise.web.connector.enableJK.\
+			propertyFile=/opt/glassfish3/glassfish/domains/domain1/config/glassfish-jk.properties
+		/opt/glassfish3/bin/asadmin restart-domain
