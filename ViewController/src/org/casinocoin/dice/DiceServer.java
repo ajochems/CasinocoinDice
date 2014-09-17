@@ -2,6 +2,8 @@ package org.casinocoin.dice;
 
 import java.math.BigInteger;
 
+import java.util.Date;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -24,6 +26,7 @@ public class DiceServer {
     private String walletLocation;
     private static CasinocoinService diceService;
     private static int blockHeight = 0;
+    private static Date lastBlockTime = new Date();
     private static String serverWalletAddress;
     private static Integer confirmations = 10;
     private static String serverJackpotAddress;
@@ -93,6 +96,22 @@ public class DiceServer {
     
     public int getBlockHeight(){
         return blockHeight;
+    }
+    
+    public static void setLastBlockTime(Date lastBlockTime) {
+        DiceServer.lastBlockTime = lastBlockTime;
+    }
+
+    public String getTimeSinceLastBlock() {
+        Date now = new Date();
+        long elapsed = now.getTime() - lastBlockTime.getTime();
+        long diffSeconds = elapsed / 1000 % 60;         
+        long diffMinutes = elapsed / (60 * 1000) % 60;         
+        long diffHours = elapsed / (60 * 60 * 1000);
+        String elapsedTimeString = "00".substring(String.valueOf(diffHours).length()) + String.valueOf(diffHours) + ":" +
+                                   "00".substring(String.valueOf(diffMinutes).length()) + String.valueOf(diffMinutes) + ":" + 
+                                   "00".substring(String.valueOf(diffSeconds).length()) + String.valueOf(diffSeconds);
+        return elapsedTimeString;
     }
     
     public static int getStaticBlockHeight(){

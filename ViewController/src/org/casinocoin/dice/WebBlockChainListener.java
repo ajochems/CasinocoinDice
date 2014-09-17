@@ -23,6 +23,7 @@ public class WebBlockChainListener implements BlockChainListener {
     public void notifyNewBestBlock(StoredBlock block) throws VerificationException {
         log.finest("New Best Block: " + block.getHeight());
         DiceServer.setBlockHeight(block.getHeight());
+        DiceServer.setLastBlockTime(new Date());
     }
 
     @Override

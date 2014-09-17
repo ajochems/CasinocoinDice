@@ -105,5 +105,13 @@ public class DiceAppModuleImpl extends ApplicationModuleImpl {
     public ActiveAvailableJackpotBetsViewImpl getActiveAvailableJackpotBetsView1() {
         return (ActiveAvailableJackpotBetsViewImpl) findViewObject("ActiveAvailableJackpotBetsView1");
     }
+
+    /**
+     * Container's getter for HistorySecretsView1.
+     * @return HistorySecretsView1
+     */
+    public SecretsViewImpl getHistorySecretsView1() {
+        return (SecretsViewImpl) findViewObject("HistorySecretsView1");
+    }
 }
 

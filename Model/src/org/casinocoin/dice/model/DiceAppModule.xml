@@ -38,6 +38,9 @@
   <ViewUsage
     Name="ActiveAvailableJackpotBetsView1"
     ViewObjectName="org.casinocoin.dice.model.ActiveAvailableJackpotBetsView"/>
+  <ViewUsage
+    Name="HistorySecretsView1"
+    ViewObjectName="org.casinocoin.dice.model.HistorySecretsView"/>
   <ViewLinkUsage
     Name="PbsToTtsViewLink1"
     ViewLinkObjectName="org.casinocoin.dice.model.PbsToTtsViewLink"

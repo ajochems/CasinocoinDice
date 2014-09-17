@@ -5,7 +5,7 @@
   <c:set var="viewcontrollerBundle1" value="#{adfBundle['org.casinocoin.dice.view.bundles.DiceServerBundle_en']}"/>
   <af:panelGroupLayout id="pgl1" layout="vertical" halign="center">
     <af:poll id="pollData" interval="30000" pollListener="#{PlacedBetsBean.refreshPlacedBets}"/>
-    <af:panelGridLayout id="pgl9" inlineStyle="max-width:650px;">
+    <af:panelGridLayout id="pgl9" inlineStyle="max-width:650px;" partialTriggers="pollData">
       <af:gridRow marginTop="5px" height="auto" id="gr1">
         <af:gridCell marginStart="5px" width="50%" id="gc1">
           <af:outputText value="Total wagered: " id="ot26"
@@ -222,20 +222,45 @@
           </af:table>
         </af:panelGroupLayout>
       </af:showDetailItem>
+      <af:showDetailItem text="#{viewcontrollerBundle1.SECRETS}" id="tabSecrets" icon="/images/secret.png">
+        <af:panelGroupLayout id="pgl10" layout="vertical" halign="center" inlineStyle="background-color:White;">
+          <af:outputText value="#{viewcontrollerBundle1.SECRETS}" id="ot36" styleClass="CSCTableHeaderText"/>
+          <af:table value="#{bindings.HistorySecretsView1.collectionModel}" var="row"
+                    rows="#{bindings.HistorySecretsView1.rangeSize}"
+                    emptyText="#{bindings.HistorySecretsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    rowBandingInterval="0" fetchSize="#{bindings.HistorySecretsView1.rangeSize}" id="t4">
+            <af:column sortProperty="#{bindings.HistorySecretsView1.hints.ValidFrom.name}" sortable="true"
+                       headerText="#{bindings.HistorySecretsView1.hints.ValidFrom.label}" id="c20" width="165">
+              <af:outputText value="#{row.ValidFrom}"
+                             shortDesc="#{bindings.HistorySecretsView1.hints.ValidFrom.tooltip}" id="ot33">
+                <af:convertDateTime pattern="#{bindings.HistorySecretsView1.hints.ValidFrom.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.HistorySecretsView1.hints.ValidTo.name}" sortable="true"
+                       headerText="#{bindings.HistorySecretsView1.hints.ValidTo.label}" id="c21" width="165">
+              <af:outputText value="#{row.ValidTo}" shortDesc="#{bindings.HistorySecretsView1.hints.ValidTo.tooltip}"
+                             id="ot34">
+                <af:convertDateTime pattern="#{bindings.HistorySecretsView1.hints.ValidTo.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.HistorySecretsView1.hints.SecretHash.name}" sortable="true"
+                       headerText="#{bindings.HistorySecretsView1.hints.SecretHash.label}" id="c22" width="400">
+              <af:outputText value="#{row.SecretHash}"
+                             shortDesc="#{bindings.HistorySecretsView1.hints.SecretHash.tooltip}" id="ot35"/>
+            </af:column>
+          </af:table>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
       <af:showDetailItem id="tabHowto" text="#{viewcontrollerBundle1.HOW_TO_PLAY}" icon="/images/rulebook.png">
         <af:panelGroupLayout id="pgl4" layout="vertical" inlineStyle="background-color:White;" halign="center">
           <af:outputText value="#{viewcontrollerBundle.HOW_TO_PLAY}" id="ot23" styleClass="CSCTableHeaderText"
                          inlineStyle="text-align:center;"/>
         </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl7" layout="vertical" inlineStyle="background-color:White;">
-          <af:outputFormatted value="&lt;ul>
-&lt;li>Select a bet without jackpot (first tab) or with jackpot (second tab)&lt;/li>
-&lt;li>Copy the corresponding coin address&lt;/li>
-&lt;li>Sent an amount between the bet minimal and maximal values from your CSC wallet (do NOT use an online wallet or exchange!)&lt;/li>
-&lt;li>The bet will be executed after your transaction has been confirmed on the block chain&lt;/li>
-&lt;li>If you win you will receive your bet amount multiplied with the bet multiplier, if you lose you will receive 0.001 coins as confirmation of your bet&lt;/li>
-&lt;li>If your bet could not be executed the bet amount will be refunded, reduced with a 0.001 transaction fee&lt;/li>
-&lt;/ul> " id="of2" styleClass="CSCText"/>
+          <af:richTextEditor value="&lt;ul> &lt;li>Select a bet without jackpot (first tab) or with jackpot (second tab)&lt;/li> &lt;li>Copy the corresponding coin address&lt;/li> &lt;li>Sent an amount between the bet minimal and maximal values from your CSC wallet (do NOT use an online wallet or exchange!)&lt;/li> &lt;li>The bet will be executed after your transaction has been confirmed on the block chain&lt;/li> &lt;li>If you win you will receive your bet amount multiplied with the bet multiplier, if you lose you will receive 0.001 coins as confirmation of your bet&lt;/li> &lt;li>If your bet could not be executed the bet amount will be refunded, reduced with a 0.001 transaction fee&lt;/li> &lt;/ul> "
+                             id="of2" styleClass="CSCText" readOnly="true">
+            <facet name="footer"/>
+          </af:richTextEditor>
         </af:panelGroupLayout>
       </af:showDetailItem>
       <af:showDetailItem id="tabVerify" text="#{viewcontrollerBundle1.VERIFY_BET}" icon="/images/verify50.png">
@@ -243,7 +268,10 @@
           <af:outputText id="ot24" styleClass="CSCTableHeaderText" value="#{viewcontrollerBundle.HOW_TO_VERIFY_A_BET}"/>
         </af:panelGroupLayout>
         <af:panelGroupLayout id="pgl8" inlineStyle="background-color:White;" layout="vertical">
-          <af:outputFormatted value="&lt;ol> &lt;li>The Lucky Number for your bet is calculated from the ID of the Transaction you send to the game and a random generated secret hash (string of characters). Every day a new hash is created and the previous hashes are released to the public. Once a hash is released a bet result can be verified, follow the steps below in order to do so. &lt;ol> &lt;li>&lt;p>Transaction ID; you can get this from the transaction details from your wallet.&lt;/p>&lt;p>Example: &lt;div style=&quot;color:#a51b1f;&quot;>764d4ece5495ae5c5d22a6fcaa5fbfef626c721c17e37dd2d19e5fcb4d1cd5de&lt;/div>&lt;/p>&lt;/li> &lt;li>&lt;p>Secret Hash; this is a random string which is created every day and released the next day. You can get it from the Secrets page&lt;/p>&lt;p>Example: &lt;div style=&quot;color:#a51b1f;&quot;>1OoTAcWnxWTgrSi4msQ9EEBXQjDAuLHh&lt;/div>&lt;/p>&lt;/li> &lt;/ol> &lt;/li> &lt;li>Concatenate both Transacton ID and Secret Hash to one string. Example: &lt;div style=&quot;color:#a51b1f;&quot;>764d4ece5495ae5c5d22a6fcaa5fbfef626c721c17e37dd2d19e5fcb4d1cd5de1OoTAcWnxWTgrSi4msQ9EEBXQjDAuLHh&lt;/div>&lt;/li> &lt;li>Next you will need to go with your concatenated string to the &lt;a href=&quot;http://www.convertstring.com/en/Hash/SHA256&quot; target=&quot;_blank&quot;>SHA-256 Hash Calculator&lt;/a>&lt;/li> &lt;li>Paste the string in the 'Paste the text you wish to SHA256 hash here' text box and click on the 'Generate SHA256 Hash' button.&lt;/li> &lt;li>When calculating the SHA 256 hash of above string you will get: &lt;div style=&quot;color:#a51b1f;&quot;>9DC5130570EC8FC5F3414C1C80BF7DA0229D8D4F5499B23650B048E9BA9030DE&lt;/div>&lt;/li> &lt;li>Now your Lucky Number is calculated from the first 4 hexadecimal digits of that string, in this case 9DC5. Go to this &lt;a href=&quot;http://www.binaryhexconverter.com/hex-to-decimal-converter&quot; target=&quot;_blank&quot;>Online Hexadecimal to Decimal converter&lt;/a> and calculated the decimal value.&lt;/li> &lt;li>For this example the Lucky Number is &lt;div style=&quot;color:#a51b1f;&quot;>9DC5&lt;/div> > &lt;div style=&quot;color:Green;&quot;>40389&lt;/div>. This number will be checked against your placed bet and determine if you win or lose.&lt;/li> &lt;li>Remember that you have to wait until the next day before you can verify your bet as the used Secret will not be released until then. This is to prevent tampering, ... knowing the secret could in theory allow you to create a winning bet&lt;/li> &lt;/ol>" id="of3" styleClass="CSCText"/>
+          <af:richTextEditor value="&lt;ol> &lt;li>The Lucky Number for your bet is calculated from the ID of the Transaction you send to the game and a random generated secret hash (string of characters). Every day a new hash is created and the previous hashes are released to the public. Once a hash is released a bet result can be verified, follow the steps below in order to do so. &lt;ol> &lt;li>&lt;p>Transaction ID; you can get this from the transaction details from your wallet.&lt;/p>&lt;p>Example: &lt;div style=&quot;color:#a51b1f;&quot;>764d4ece5495ae5c5d22a6fcaa5fbfef626c721c17e37dd2d19e5fcb4d1cd5de&lt;/div>&lt;/p>&lt;/li> &lt;li>&lt;p>Secret Hash; this is a random string which is created every day and released the next day. You can get it from the Secrets page&lt;/p>&lt;p>Example: &lt;div style=&quot;color:#a51b1f;&quot;>1OoTAcWnxWTgrSi4msQ9EEBXQjDAuLHh&lt;/div>&lt;/p>&lt;/li> &lt;/ol> &lt;/li> &lt;li>Concatenate both Transacton ID and Secret Hash to one string. Example: &lt;div style=&quot;color:#a51b1f;&quot;>764d4ece5495ae5c5d22a6fcaa5fbfef626c721c17e37dd2d19e5fcb4d1cd5de1OoTAcWnxWTgrSi4msQ9EEBXQjDAuLHh&lt;/div>&lt;/li> &lt;li>Next you will need to go with your concatenated string to the &lt;a href=&quot;http://www.convertstring.com/en/Hash/SHA256&quot; target=&quot;_blank&quot;>SHA-256 Hash Calculator&lt;/a>&lt;/li> &lt;li>Paste the string in the 'Paste the text you wish to SHA256 hash here' text box and click on the 'Generate SHA256 Hash' button.&lt;/li> &lt;li>When calculating the SHA 256 hash of above string you will get: &lt;div style=&quot;color:#a51b1f;&quot;>9DC5130570EC8FC5F3414C1C80BF7DA0229D8D4F5499B23650B048E9BA9030DE&lt;/div>&lt;/li> &lt;li>Now your Lucky Number is calculated from the first 4 hexadecimal digits of that string, in this case 9DC5. Go to this &lt;a href=&quot;http://www.binaryhexconverter.com/hex-to-decimal-converter&quot; target=&quot;_blank&quot;>Online Hexadecimal to Decimal converter&lt;/a> and calculated the decimal value.&lt;/li> &lt;li>For this example the Lucky Number is &lt;div style=&quot;color:#a51b1f;&quot;>9DC5&lt;/div> > &lt;div style=&quot;color:Green;&quot;>40389&lt;/div>. This number will be checked against your placed bet and determine if you win or lose.&lt;/li> &lt;li>Remember that you have to wait until the next day before you can verify your bet as the used Secret will not be released until then. This is to prevent tampering, ... knowing the secret could in theory allow you to create a winning bet&lt;/li> &lt;/ol>"
+                             id="of3" styleClass="CSCText" readOnly="true">
+            <facet name="footer"/>
+          </af:richTextEditor>
         </af:panelGroupLayout>
       </af:showDetailItem>
     </af:panelTabbed>

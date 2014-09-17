@@ -19,7 +19,7 @@
                 </f:facet>
                 <f:facet name="bottom">
                     <af:panelGroupLayout layout="vertical" id="pgl2" halign="center">
-                        <af:outputFormatted value="Server is at block height #{diceServer.blockHeight} of network height #{diceServer.peerMaxChainHeight}."
+                        <af:outputFormatted value="Server is at block height #{diceServer.blockHeight}. Time since last block: #{diceServer.timeSinceLastBlock}"
                                             id="of1" inlineStyle="text-align:center; font-size:small;"
                                             partialTriggers="blockPoll"/>
                         <af:poll id="blockPoll"/>

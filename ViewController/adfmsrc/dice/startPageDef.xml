@@ -9,6 +9,8 @@
               id="ActiveAvailableBetsView1Iterator"/>
     <iterator Binds="ActiveAvailableJackpotBetsView1" RangeSize="25" DataControl="DiceAppModuleDataControl"
               id="ActiveAvailableJackpotBetsView1Iterator"/>
+    <iterator Binds="HistorySecretsView1" RangeSize="25" DataControl="DiceAppModuleDataControl"
+              id="HistorySecretsView1Iterator"/>
   </executables>
   <bindings>
     <tree IterBinding="PlacedBetsView1Iterator" id="PlacedBetsView1">
@@ -49,6 +51,15 @@
           <Item Value="WinMultiplier"/>
           <Item Value="MinBet"/>
           <Item Value="MaxBet"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="HistorySecretsView1Iterator" id="HistorySecretsView1">
+      <nodeDefinition DefName="org.casinocoin.dice.model.HistorySecretsView" Name="HistorySecretsView10">
+        <AttrNames>
+          <Item Value="ValidFrom"/>
+          <Item Value="ValidTo"/>
+          <Item Value="SecretHash"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
